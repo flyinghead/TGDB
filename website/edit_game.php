@@ -37,7 +37,7 @@ require_once __DIR__ . "/include/WebUtils.class.php";
 if(isset($_REQUEST['id']) && !empty($_REQUEST['id']) && is_numeric($_REQUEST['id']))
 {
 	$options = array("release_date" => true, "overview" => true, "players" => true, "rating" => true, "ESRB" => true, "boxart" => true, "coop" => true,
-		"genres" => true, "publishers" => true, "platform" => true, "youtube" => true, "alternates" => true, "uids" => true, "region_id" => true, "country_id" => true);
+		"genres" => true, "publishers" => true, "platform" => true, "youtube" => true, "alternates" => true, "uids" => true, "region_id" => true, "country_id" => true, "hashes" => true);
 	$API = TGDB::getInstance();
 	$GenreList = $API->GetGenres();
 	$ESRBRating = $API->GetESRBRating();
@@ -601,6 +601,11 @@ $Header->appendRawHeader(function() { global $Game, $tgdb_user, $game_devs, $dev
 						input_field.attr('name', "uids[]");
 						input_field.attr('placeholder', 'UID(s)');
 					}
+					else if (type == "hashes")
+					{
+						input_field.attr('name', "hashes[]");
+						input_field.attr('placeholder', 'Hash(es)');
+					}
 					else
 					{
 						input_field.attr('name', "alternate_names[]");
@@ -622,6 +627,8 @@ $Header->appendRawHeader(function() { global $Game, $tgdb_user, $game_devs, $dev
 			remove_me("alts");
 			add_more("uids");
 			remove_me("uids");
+			add_more("hashes");
+			remove_me("hashes");
 		});
 
 </script>
@@ -810,6 +817,24 @@ $Header->appendRawHeader(function() { global $Game, $tgdb_user, $game_devs, $dev
 										<input name="uids[]" type="text" class="form-control" placeholder="UID(s)"/>
 										<div class="input-group-append">
 											<button class="btn btn-success add-more-uids" type="button">+</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+								<div id="hashes_fields">
+									<?php while(!empty($Game->hashes) && !empty($hash = array_shift($Game->hashes))) : ?>
+									<div class="input-group mb-3">
+										<input value="<?= $hash ?>" name="hashes[]" type="text" class="form-control" placeholder="Hash(es)"/>
+										<div class="input-group-append">
+											<button class="btn btn-danger remove-me-hashes" type="button">-</button>
+										</div>
+									</div>
+									<?php endwhile; ?>
+									<div class="input-group mb-3">
+										<input name="hashes[]" type="text" class="form-control" placeholder="Hash(es)"/>
+										<div class="input-group-append">
+											<button class="btn btn-success add-more-hashes" type="button">+</button>
 										</div>
 									</div>
 								</div>

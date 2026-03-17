@@ -29,7 +29,10 @@ class TGDBUtils
 			}
 			if(isset($ret))
 			{
-				return CommonUtils::$BOXART_BASE_URL . "$return_size/" . $ret->filename;
+				if ($ret->userid >= 999999)
+					return CommonUtils::$LOCAL_BOXART_BASE_URL . "$return_size/" . $ret->filename;
+				else
+					return CommonUtils::$BOXART_BASE_URL . "$return_size/" . $ret->filename;
 			}
 		}
 		if($return_placeholder)
@@ -50,6 +53,7 @@ class TGDBUtils
 	{
 		$ret = array();
 		$BASE_URL = CommonUtils::getImagesBaseURL();
+		$LOCAL_BASE_URL = CommonUtils::getImagesLocalBaseURL();
 		if(isset($game->boxart))
 		{
 			foreach($game->boxart as $art)
@@ -59,12 +63,24 @@ class TGDBUtils
 					if($art->side == $side)
 					{
 						$art->thumbnail = new \stdClass();
-						$art->original = $BASE_URL["original"] . $art->filename;
-						$art->small = $BASE_URL["small"] . $art->filename;
-						$art->cropped_center_thumb = $BASE_URL["cropped_center_thumb"] . $art->filename;
-						$art->thumbnail = $BASE_URL["thumb"] . $art->filename;
-						$art->medium = $BASE_URL["medium"] . $art->filename;
-						$art->large = $BASE_URL["large"] . $art->filename;
+						if (isset($art->userid) && $art->userid >= 999999)
+						{
+							$art->original = $LOCAL_BASE_URL["original"] . $art->filename;
+							$art->small = $LOCAL_BASE_URL["small"] . $art->filename;
+							$art->cropped_center_thumb = $LOCAL_BASE_URL["cropped_center_thumb"] . $art->filename;
+							$art->thumbnail = $LOCAL_BASE_URL["thumb"] . $art->filename;
+							$art->medium = $LOCAL_BASE_URL["medium"] . $art->filename;
+							$art->large = $LOCAL_BASE_URL["large"] . $art->filename;
+						}
+						else
+						{
+							$art->original = $BASE_URL["original"] . $art->filename;
+							$art->small = $BASE_URL["small"] . $art->filename;
+							$art->cropped_center_thumb = $BASE_URL["cropped_center_thumb"] . $art->filename;
+							$art->thumbnail = $BASE_URL["thumb"] . $art->filename;
+							$art->medium = $BASE_URL["medium"] . $art->filename;
+							$art->large = $BASE_URL["large"] . $art->filename;
+						}
 						$ret[] = $art;
 					}
 				}

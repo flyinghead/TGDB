@@ -57,7 +57,7 @@ require_once __DIR__ . "/../include/DiscordUtils.class.php";
 
 try
 {
-	$filters = ['game_title' => true, 'overview' => true, 'platform' => true, 'youtube' => true, 'release_date' => true, 'players' => true, 'coop' => true, 'developers' => true, 'publishers' => true, 'genres' => true, 'rating' => true, 'alternates' => true, "uids" => true, "region_id" => true, 'country_id' => true];
+	$filters = ['game_title' => true, 'overview' => true, 'platform' => true, 'youtube' => true, 'release_date' => true, 'players' => true, 'coop' => true, 'developers' => true, 'publishers' => true, 'genres' => true, 'rating' => true, 'alternates' => true, "uids" => true, "region_id" => true, 'country_id' => true, 'hashes' => true];
 	$API = TGDB::getInstance();
 	$old_game_data = $API->GetGameByID($_REQUEST['game_id'], 0, 1, $filters)[0];
 
@@ -124,7 +124,7 @@ try
 
 	$res = $API->UpdateGame( $tgdb_user->GetUserID(), $_REQUEST['game_id'], trim($_REQUEST['game_title']), $_REQUEST['overview'], $_REQUEST['youtube'], $_REQUEST['release_date'],
 		$_REQUEST['players'], $_REQUEST['coop'], $_REQUEST['developers'], $_REQUEST['publishers'], $_REQUEST['genres'], $_REQUEST['rating'],  $_REQUEST['alternate_names'],
-		$_REQUEST['uids'], $_REQUEST['platform'], $_REQUEST['region_id'], $_REQUEST['country_id']);
+		$_REQUEST['uids'], $_REQUEST['platform'], $_REQUEST['region_id'], $_REQUEST['country_id'], $_REQUEST['hashes']);
 
 
 	if($res)

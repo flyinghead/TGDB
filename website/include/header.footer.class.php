@@ -79,8 +79,8 @@ class HEADER
 	<link rel="stylesheet" href="/css/main.css" crossorigin="anonymous">
 	<?php if(isset($this->_printExtraHeader)) : call_user_func($this->_printExtraHeader); endif; ?>
 	<?php if(!$tgdb_user->isLoggedIn()) : ?>
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5337615406686584"
-     crossorigin="anonymous"></script>
+	<!-- script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5337615406686584"
+     crossorigin="anonymous"></script -->
 	 <?php endif; ?>
 </head>
 <body>
@@ -91,7 +91,7 @@ class HEADER
 		}
 	?>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="margin: 10px;">
-		<a class="navbar-brand" href="/">TheGamesDB</a>
+		<a class="navbar-brand" href="/">Flycast GamesDB</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -113,12 +113,12 @@ class HEADER
 				<li class="nav-item">
 					<a class="nav-link" href="/add_game.php">Add New Game</a>
 				</li>
-				<li class="nav-item">
+				<!-- li class="nav-item">
 					<a class="nav-link" href="https://discord.gg/2gxeAURxmA">Discord</a>
-				</li>
-				<li class="nav-item">
+				</li -->
+				<!-- li class="nav-item">
 					<a class="nav-link" href="https://www.patreon.com/thegamesdb" target="_blank">Patreon</a>
-				</li>
+				</li -->
 			</ul>
 			<form id="search-form" action="/search.php" method="get" class="form-inline my-2 my-lg-0">
 				<input name="name" type="text" placeholder="Search">
@@ -143,16 +143,16 @@ class HEADER
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="/report_review.php">Duplicates Reports</a>
 						<?php endif; ?>
-						<a class="dropdown-item" href="<?= append_sid("/login.php", 'logout', false, $tgdb_user->GetUserSessionID()); ?>">Logout</a>
+						<a class="dropdown-item" href="<?= "/login.php?logout&sid=" . $tgdb_user->GetUserSessionID(); ?>">Logout</a>
 					</div>
 				</div>
 				<?php else : ?>
 				<li class="nav-item mr-0">
 					<a class="nav-link" href="/login.php">Log in</a>
 				</li>
-				<li class="nav-item mr-0">
+				<!-- li class="nav-item mr-0">
 					<a class="nav-link" href="/register.php">Sign Up</a>
-				</li>
+				</li -->
 				<?php endif; ?>
 			</ul>
 		</div>
@@ -170,14 +170,14 @@ class FOOTER
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-3">
-						<h2 class="logo"><a href="/"> TheGamesDB </a></h2>
+						<h2 class="logo"><a href="/"> Flycast GamesDB </a></h2>
 					</div>
 					<div class="col-sm-4 col-lg-2">
 						<h5>Get started</h5>
 						<ul>
 							<li><a href="/">Home</a></li>
 							<?php if(empty($tgdb_user) || !$tgdb_user->isLoggedIn()) : ?>
-							<li><a href="https://discord.gg/2gxeAURxmA">Request Account on Discord</a></li>
+							<!-- li><a href="https://discord.gg/2gxeAURxmA">Request Account on Discord</a></li -->
 							<?php endif; ?>
 							<li><a href="/browse.php">Games</a></li>
 							<li><a href="/list_platforms.php">Platforms</a></li>
@@ -189,8 +189,8 @@ class FOOTER
 					<div class="col-sm-4 col-lg-3">
 						<h5>Developers</h5>
 						<ul>
-							<li><a href="https://api.thegamesdb.net/">API Documentation</a></li>
-							<li><a href="https://api.thegamesdb.net/key.php">API Access Request</a></li>
+							<li><a href="/api/index.php">API Documentation</a></li>
+							<!-- li><a href="https://api.thegamesdb.net/key.php">API Access Request</a></li -->
 							<li><a href="https://github.com/TheGamesDB2/Website">Github Repo</a></li>
 						</ul>
 					</div>
@@ -211,13 +211,13 @@ class FOOTER
 						</ul>
 					</div>
 					<?php endif;?>
-					<div class="col-sm-4 col-lg-3">
+					<!-- div class="col-sm-4 col-lg-3">
 						<div class="social-networks">
 							<a href="https://twitter.com/thegamesdb" class="twitter"><i class="fab fa-twitter"></i></a>
 							<a href="https://www.facebook.com/thegamesdb/" class="facebook"><i class="fab fa-facebook"></i></a>
 						</div>
 						<a href="https://discord.gg/2gxeAURxmA" role="button" class="btn btn-info">Contact us</a>
-					</div>
+					</div -->
 				</div>
 
 				<div class="footer-copyright">

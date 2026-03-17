@@ -2,9 +2,10 @@
 
 class CommonUtils
 {
-	static public $WEBSITE_BASE_URL = "https://thegamesdb.net/";
-	static public $API_BASE_URL = "https://api.thegamesdb.net";
+	static public $WEBSITE_BASE_URL = "https://tgdb.flyca.st/";
+	static public $API_BASE_URL = "https://tgdb.flyca.st/api";
 	static public $BOXART_BASE_URL = "https://cdn.thegamesdb.net/images/";
+	static public $LOCAL_BOXART_BASE_URL = "/cdn/images/";
 
 	static function getImagesBaseURL()
 	{
@@ -18,6 +19,19 @@ class CommonUtils
 			"large" => CommonUtils::$BOXART_BASE_URL . "large/",
 		];
 	}
+
+	static function getImagesLocalBaseURL()
+	{
+               return
+               [
+                       "original" => CommonUtils::$LOCAL_BOXART_BASE_URL . "original/",
+                       "small" => CommonUtils::$LOCAL_BOXART_BASE_URL . "small/",
+                       "thumb" => CommonUtils::$LOCAL_BOXART_BASE_URL . "thumb/",
+                       "cropped_center_thumb" => CommonUtils::$LOCAL_BOXART_BASE_URL . "cropped_center_thumb/",
+                       "medium" => CommonUtils::$LOCAL_BOXART_BASE_URL . "medium/",
+                       "large" => CommonUtils::$LOCAL_BOXART_BASE_URL . "large/",
+               ];
+        }
 
 	static function htmlspecialchars_decodeArrayRecursive(&$array)
 	{

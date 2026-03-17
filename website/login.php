@@ -5,7 +5,7 @@ require_once __DIR__ . "/../include/CommonUtils.class.php";
 $error_msgs = array();
 $success_msg = array();
 
-$_user = phpBBUser::getInstance();
+//$_user = phpBBUser::getInstance();
 $tgdb_user = TGDBUser::getInstance();
 if(isset($_REQUEST['logout']))
 {
@@ -15,11 +15,11 @@ if(isset($_REQUEST['logout']))
 		'<script type="text/javascript">setTimeout(function(){window.location="' . CommonUtils::$WEBSITE_BASE_URL . '";}, 5000);</script>';
 	
 }
-else if($_user->isLoggedIn())
-{
-	$error_msgs[] = "User is already logged in. You will be automatically redirected, if it takes longer than 10 seconds <a href='" . CommonUtils::$WEBSITE_BASE_URL . "'>Click Here</a>." .
-		'<script type="text/javascript">setTimeout(function(){window.location="' . CommonUtils::$WEBSITE_BASE_URL . '";}, 5000);</script>';
-}
+//else if($_user->isLoggedIn())
+//{
+//	$error_msgs[] = "User is already logged in. You will be automatically redirected, if it takes longer than 10 seconds <a href='" . CommonUtils::$WEBSITE_BASE_URL . "'>Click Here</a>." .
+//		'<script type="text/javascript">setTimeout(function(){window.location="' . CommonUtils::$WEBSITE_BASE_URL . '";}, 5000);</script>';
+//}
 
 if($_SERVER['REQUEST_METHOD'] == "POST" && empty($error_msgs) && empty($success_msg))
 {
@@ -28,9 +28,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST" && empty($error_msgs) && empty($success_
 		if(!empty($_POST['username']) && !empty($_POST['password']))
 		{
 			$tgdb_res = $tgdb_user->Login(false,false);
-
 			if($tgdb_res['status'] != "LOGIN_SUCCESS")
 			{
+/*
 				$res = $_user->Login(isset($_POST['autologin']), isset($_POST['viewonline']));
 				if($res['status'] == LOGIN_SUCCESS)
 				{
@@ -70,8 +70,9 @@ $permStmt->execute();
 					exit();
 				}
 			else
+*/
 			{
-				$error_msgs[] = $res['error_msg_str'];
+				$error_msgs[] = $tgdb_res['error_msg_str'];
 			}
 		}
 		else

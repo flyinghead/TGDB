@@ -52,7 +52,7 @@ class TGDBUser
 		try {
 			// Check if user exists and get their data
 
-			$stmt = $this->dbh->prepare("SELECT id, username, password FROM users WHERE username = :username and hashed = ''");
+			$stmt = $this->dbh->prepare("SELECT id, username, userpass FROM users WHERE username = :username" /* and hashed = ''" */);
 			$stmt->bindParam(':username', $login_username);
 			$stmt->execute();
 			$user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -63,7 +63,7 @@ class TGDBUser
 			}
 
 			// Verify password (assuming password is hashed with password_hash())
-			if (!password_verify($login_password, $user['password'])) {
+			if (!password_verify($login_password, $user['userpass'])) {
 				$ret['error_msg_str'] = 'Invalid username or password.';
 				return $ret;
 			}
@@ -272,7 +272,7 @@ class TGDBUser
 			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 			// Insert the new user
-			$stmt = $this->dbh->prepare("INSERT INTO users (username, password, email_address) VALUES (:username, :password, :email)");
+			$stmt = $this->dbh->prepare("INSERT INTO users (username, userpass, emailaddress) VALUES (:username, :password, :email)");
 			$stmt->bindParam(':username', $username);
 			$stmt->bindParam(':password', $hashed_password);
 			$stmt->bindParam(':email', $email);

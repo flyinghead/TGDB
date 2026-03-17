@@ -248,6 +248,11 @@ $Header->appendRawHeader(function() { global $devs_list, $pubs_list; ?>
 						input_field.attr('name', "uids");
 						input_field.attr('placeholder', 'UID(s)');
 					}
+					else if(type == "hashes")
+					{
+						input_field.attr('name', "hashes");
+						input_field.attr('placeholder', 'Hash(es)');
+					}
 					else
 					{
 						input_field.attr('name', "alternate_names[]");
@@ -269,6 +274,8 @@ $Header->appendRawHeader(function() { global $devs_list, $pubs_list; ?>
 			remove_me("alts");
 			add_more("uids");
 			remove_me("uids");
+			add_more("hashes");
+			remove_me("hashes");
 		});
 
 </script>
@@ -293,10 +300,7 @@ $Header->appendRawHeader(function() { global $devs_list, $pubs_list; ?>
 							<img class="card-img-top" src="<?= TGDBUtils::GetPlaceholderImage("Placeholder", 'boxart'); ?>"/>
 							<div class="card-body">
 								<p>Platform: <select name="platform" style="width:100%">
-										<option value="" selected disabled hidden>Select Platform</option>
-										<?php foreach($PlatformList as $Platform) : ?>
-										<option value="<?= $Platform->id ?>"><?= $Platform->name ?></option>
-										<?php endforeach; ?>
+										<option value="16" selected>Sega Dreamcast</option>
 									</select>
 								</p>
 								<p>Region*: <select name="region_id" style="width:100%">
@@ -385,6 +389,16 @@ $Header->appendRawHeader(function() { global $devs_list, $pubs_list; ?>
 										<input name="uids[]" type="text" class="form-control" placeholder="UID(s)"/>
 										<div class="input-group-append">
 											<button class="btn btn-success add-more-uids" type="button">+</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+								<div id="hashes_fields">
+									<div class="input-group mb-3">
+										<input name="hashes[]" type="text" class="form-control" placeholder="Hash(es)"/>
+										<div class="input-group-append">
+											<button class="btn btn-success add-more-hashes" type="button">+</button>
 										</div>
 									</div>
 								</div>

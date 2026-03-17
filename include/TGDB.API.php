@@ -884,10 +884,10 @@ class TGDB
 				}
 			}
 		}
-		$qry .= " FROM games, games_hashes where games.id = games_hashes.games_id and games_hashes.hashes in ($games_hashes) ";
+		$qry .= " FROM games, games_hashes where games.id = games_hashes.games_id and games_hashes.hash in ($games_hashes) ";
 		if(!empty($filter_type))
 		{
-			$qry .= " AND games_hashes.hashes = :type";
+			$qry .= " AND games_hashes.type = :type";
 		}
 
 		if(!empty($PlatformIDs))
@@ -1433,7 +1433,7 @@ class TGDB
 			return array();
 		}
 
-		$qry = "Select B.games_id, B.id, B.type, B.side, B.filename, B.resolution FROM banners B, (SELECT id FROM games WHERE id IN ($GameIDs) LIMIT :limit OFFSET :offset) T WHERE B.games_id = T.id ";
+		$qry = "Select B.games_id, B.id, B.type, B.side, B.filename, B.resolution, B.userid FROM banners B, (SELECT id FROM games WHERE id IN ($GameIDs) LIMIT :limit OFFSET :offset) T WHERE B.games_id = T.id ";
 		$is_filter = false;
 		if(is_array($filters))
 		{
@@ -1485,7 +1485,7 @@ class TGDB
 		$queries = array();
 		foreach($type_list as $type)
 		{
-			$qry = "(Select games_id as game_id, type, side, filename, resolution FROM banners WHERE type = '$type->type'";
+			$qry = "(Select games_id as game_id, type, side, filename, resolution, userid FROM banners WHERE type = '$type->type'";
 
 			if(!empty($type->side) && ($type->side == 'front' || $type->side == 'back'))
 			{
@@ -1507,7 +1507,7 @@ class TGDB
 
 	function GetLatestGameBoxart($offset = 0, $limit = 20, $filters = 'boxart', $side = '')
 	{
-		$qry = "Select games_id as game_id, type, side, filename, resolution FROM banners WHERE 1 ";
+		$qry = "Select games_id as game_id, type, side, filename, resolution, userid FROM banners WHERE 1 ";
 		$is_filter = false;
 		if(is_array($filters))
 		{
@@ -2579,6 +2579,7 @@ class TGDB
 		$sth = $dbh->prepare("INSERT IGNORE INTO games_hashes (games_id, hash, type) VALUES (:games_id, :hash, :type);");
 		$sth->bindValue(':games_id', $game_id, PDO::PARAM_INT);
 		$sth->bindValue(':hash', $hash, PDO::PARAM_STR);
+		$sth->bindValue(':type', $type, PDO::PARAM_STR);
 		return $sth->execute();
 	}
 
@@ -2656,7 +2657,7 @@ class TGDB
 				if(!empty($new_hash))
 				{
 					$type = "";
-					foreach(["crc32" => "[a-Z0-9]{8}", "sha1" => "[a-Z0-9]{40}"] as $key => $pattern)
+					foreach(["crc32" => "[a-Z0-9]{8}", "sha1" => "[a-Z0-9]{40}", "md5" => "[a-fA-F0-9]{32}"] as $key => $pattern)
 					{
 						if(preg_match_all("/$pattern/", $new_hash, $matches))
 						{
@@ -2670,7 +2671,7 @@ class TGDB
 					if(!empty($type))
 					{
 						$valid_hash[] = ["hash" => $new_hash, "type" => $type];
-						if(!in_array($new_hash, $current_hashes, true))
+						if(!in_array($valid_hash, $current_hashes, true))
 						{
 							$res = $this->InsertGamesHash($games_id, $new_hash, $type);
 							if(!$dbh->inTransaction() && !$res)
@@ -2931,7 +2932,7 @@ class TGDB
 		return true;
 	}
 
-	function UpdateGame($user_id, $game_id, $game_title, $overview, $youtube, $release_date, $players, $coop, $new_developers, $new_publishers, $new_genres, $ratings, $alternate_names, $uids, $platform, $region_id, $country_id)
+	function UpdateGame($user_id, $game_id, $game_title, $overview, $youtube, $release_date, $players, $coop, $new_developers, $new_publishers, $new_genres, $ratings, $alternate_names, $uids, $platform, $region_id, $country_id, $hashes)
 	{
 		$dbh = $this->database->dbh;
 		{
@@ -2952,6 +2953,8 @@ class TGDB
 			$this->UpdateGamesAltName($user_id, $game_id, $alternate_names);
 
 			$this->UpdateGamesUID($user_id, $game_id, $Game["platform"], $uids);
+
+			$this->UpdateGamesHash($user_id, $game_id, $hashes);
 
 			if(!empty($new_genres))
 			{
@@ -3134,7 +3137,7 @@ class TGDB
 		return $dbh->commit();
 	}
 
-	function InsertGame($user_id, $game_title, $overview, $youtube, $release_date, $players, $coop, $new_developers, $new_publishers, $platform, $new_genres, $ratings, $alternate_names, $uids, $region_id, $country_id)
+	function InsertGame($user_id, $game_title, $overview, $youtube, $release_date, $players, $coop, $new_developers, $new_publishers, $platform, $new_genres, $ratings, $alternate_names, $uids, $region_id, $country_id, $hashes)
 	{
 		$game_id = 0;
 		$dbh = $this->database->dbh;
@@ -3222,6 +3225,10 @@ class TGDB
 				if(!empty($uids))
 				{
 					$this->UpdateGamesUID($user_id, $game_id, $platform, $uids);
+				}
+				if(!empty($hashes))
+				{
+					$this->UpdateGamesHash($user_id, $game_id, $hashes);
 				}
 
 				$dbh->commit();

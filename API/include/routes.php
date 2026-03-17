@@ -320,6 +320,17 @@ $app->group('/v1', function()
 					}
 					$JSON_Response['include']['boxart']['base_url'] = CommonUtils::getImagesBaseURL();
 					$JSON_Response['include']['boxart']['data'] = $API->GetGameBoxartByID($IDs, 0, 999, 'boxart');
+					// FIXME infamous hack
+					$list = $JSON_Response['include']['boxart']['data'];
+					foreach($list as &$game)
+					{
+						foreach($game as &$image)
+						{
+							if ($image->userid >= 999999)
+								$image->filename = "https://tgdb.flyca.st/cdn/images/thumb/" . $image->filename;
+							unset($image->userid);
+						}
+					}
 				}
 				if(isset($options['platform']) && $options['platform'])
 				{

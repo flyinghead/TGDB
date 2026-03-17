@@ -528,7 +528,7 @@ definitions:
               type: string
           example:
             previous: ''
-            current: 'https://api.thegamesdb.net/Games/ByGameID?apikey=APIKEY&id=1%2C2%2C3%2C4&fields=players%2Cpublishers%2Cgenres%2Coverview%2Clast_updated%2Crating%2Cplatform%2Ccoop%2Cyoutube%2Cos%2Cprocessor%2Cram%2Chdd%2Cvideo%2Csound%2Calternates&include=boxart%2Cplatform&page=1'
+            current: 'https://tgdb.flyca.st/api/v1/Games/ByGameID?apikey=APIKEY&id=1%2C2%2C3%2C4&fields=players%2Cpublishers%2Cgenres%2Coverview%2Clast_updated%2Crating%2Cplatform%2Ccoop%2Cyoutube%2Cos%2Cprocessor%2Cram%2Chdd%2Cvideo%2Csound%2Calternates&include=boxart%2Cplatform&page=1'
             next: ''
   GamesByGameID:
     allOf:
@@ -1077,6 +1077,6 @@ definitions:
 schemes: 
 - https
 
-host: api.thegamesdb.net
-basePath: /
+host: tgdb.flyca.st
+basePath: /api/
 

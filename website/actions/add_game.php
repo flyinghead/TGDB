@@ -126,7 +126,7 @@ try
 	{
 		$res = $API->InsertGame($tgdb_user->GetUserID(), $_REQUEST['game_title'], $_REQUEST['overview'], $_REQUEST['youtube'], $_REQUEST['release_date'],
 			$_REQUEST['players'], $_REQUEST['coop'], $_REQUEST['developers'], $_REQUEST['publishers'], $_REQUEST['platform'], $_REQUEST['genres'], $_REQUEST['rating'],
-			$_REQUEST['alternate_names'], $_REQUEST['uids'], $_REQUEST['region_id'], $_REQUEST['country_id']);
+			$_REQUEST['alternate_names'], $_REQUEST['uids'], $_REQUEST['region_id'], $_REQUEST['country_id'], $_REQUEST['hashes']);
 	}
 
 	if($res)

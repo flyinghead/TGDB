@@ -21,7 +21,7 @@ if(!isset($_GET['hash']) || empty($_GET['hash'])) {
         $db->beginTransaction();
         
         // Find user with the provided hash
-        $stmt = $db->prepare("SELECT id, username, email_address FROM users WHERE hashed = :hash");
+        $stmt = $db->prepare("SELECT id, username, emailaddress FROM users WHERE hashed = :hash");
         $stmt->bindParam(':hash', $hash);
         $stmt->execute();
         

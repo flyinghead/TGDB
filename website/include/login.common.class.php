@@ -8,6 +8,11 @@ if(Config::$debug)
 }
 else
 {
-	require __DIR__ . "/login.phpbb.class.php";
+//	require __DIR__ . "/login.phpbb.class.php";
 	require __DIR__ . "/login.tgdb.class.php";
+
+function append_sid($a, $b, $c, $d)
+{
+    return '#';
+}
 }

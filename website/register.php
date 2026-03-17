@@ -13,6 +13,11 @@ if($tgdb_user->isLoggedIn())
 	$error_msgs[] = "You are already logged in. You will be automatically redirected, if it takes longer than 10 seconds <a href='" . CommonUtils::$WEBSITE_BASE_URL . "'>Click Here</a>." .
 		'<script type="text/javascript">setTimeout(function(){window.location="' . CommonUtils::$WEBSITE_BASE_URL . '";}, 5000);</script>';
 }
+else
+{
+	$error_msgs[] = "Registering is disabled. You will be automatically redirected, if it takes longer than 10 seconds <a href='" . CommonUtils::$WEBSITE_BASE_URL . "'>Click Here</a>." .
+		'<script type="text/javascript">setTimeout(function(){window.location="' . CommonUtils::$WEBSITE_BASE_URL . '";}, 5000);</script>';
+}
 
 // Function to send verification email
 function sendVerificationEmail($username, $email, $hash) {
@@ -183,7 +188,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" && empty($error_msgs) && empty($success_
                     $error_msgs[] = "Username already exists. Please choose a different username.";
                 } else {
                     // Check if email already exists
-                    $stmt = $db->prepare("SELECT id FROM users WHERE email_address = :email");
+                    $stmt = $db->prepare("SELECT id FROM users WHERE emailaddress = :email");
                     $stmt->bindParam(':email', $email);
                     $stmt->execute();
                     
@@ -194,13 +199,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST" && empty($error_msgs) && empty($success_
                         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                         
                         // Insert the new user
-                        $stmt = $db->prepare("INSERT INTO users (username, password, email_address, created_at, hashed) 
-                                             VALUES (:username, :password, :email, :created_at, :hash)");
+                        $stmt = $db->prepare("INSERT INTO users (username, userpass, emailaddress) 
+                                             VALUES (:username, :password, :email)");
                         $stmt->bindParam(':username', $username);
                         $stmt->bindParam(':password', $hashed_password);
                         $stmt->bindParam(':email', $email);
-                        $stmt->bindParam(':created_at', $created_at);
-                        $stmt->bindParam(':hash', $hash);
                         $stmt->execute();
                         
                         $user_id = $db->lastInsertId();
@@ -209,7 +212,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST" && empty($error_msgs) && empty($success_
                         $db->commit();
                         
                         // Send verification email
-                        if(sendVerificationEmail($username, $email, $hash)) {
+                        // if(sendVerificationEmail($username, $email, $hash)) {
+			if (true) {
                             $success_msg[] = "Registration successful! Please check your email to verify your account. You will be redirected to the login page in 10 seconds. <a href='login.php'>Click here</a> if you are not redirected automatically.<br> If you do not receive the email, please reach out to us on <a class=\"nav-link\" href=\"https://discord.gg/2gxeAURxmA\">Discord</a>" .
                                 '<script type="text/javascript">setTimeout(function(){window.location="login.php";}, 10000);</script>';
                             

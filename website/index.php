@@ -125,7 +125,7 @@ $Header->appendRawHeader(function() { ?>
 				<?php endforeach; ?>
 			</div>
 
-			<div class="col-12 col-lg-2 order-1 order-lg-2">
+			<!-- div class="col-12 col-lg-2 order-1 order-lg-2">
 
 				<div class="card border-secondary mb-3" style="text-align: center;">
 					<div class="card-header">
@@ -151,8 +151,8 @@ $Header->appendRawHeader(function() { ?>
 					</div>
 				</div>
 
-				<iframe style="background-color: transparent;width:100%;height:500px;border:0;" src="https://discordapp.com/widget?id=360271801315491840&theme=light"></iframe>
-			</div>
+				<!-- iframe style="background-color: transparent;width:100%;height:500px;border:0;" src="https://discordapp.com/widget?id=360271801315491840&theme=light"></iframe -->
+			</div -->
 
 		</div>
 		<?= (isset($page)) ? PaginationUtils::Create($has_next_page, '/recently_added.php') : "";?>
