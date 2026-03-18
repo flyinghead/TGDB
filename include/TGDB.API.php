@@ -1433,7 +1433,7 @@ class TGDB
 			return array();
 		}
 
-		$qry = "Select B.games_id, B.id, B.type, B.side, B.filename, B.resolution, B.userid FROM banners B, (SELECT id FROM games WHERE id IN ($GameIDs) LIMIT :limit OFFSET :offset) T WHERE B.games_id = T.id ";
+		$qry = "Select B.games_id, B.id, B.type, B.side, B.filename, B.resolution, CASE WHEN B.userid >= 999999 THEN 1 ELSE 0 END AS base_url FROM banners B, (SELECT id FROM games WHERE id IN ($GameIDs) LIMIT :limit OFFSET :offset) T WHERE B.games_id = T.id ";
 		$is_filter = false;
 		if(is_array($filters))
 		{
@@ -1485,7 +1485,7 @@ class TGDB
 		$queries = array();
 		foreach($type_list as $type)
 		{
-			$qry = "(Select games_id as game_id, type, side, filename, resolution, userid FROM banners WHERE type = '$type->type'";
+			$qry = "(Select games_id as game_id, type, side, filename, resolution, CASE WHEN userid >= 999999 THEN 1 ELSE 0 END AS base_url FROM banners WHERE type = '$type->type'";
 
 			if(!empty($type->side) && ($type->side == 'front' || $type->side == 'back'))
 			{
@@ -1507,7 +1507,7 @@ class TGDB
 
 	function GetLatestGameBoxart($offset = 0, $limit = 20, $filters = 'boxart', $side = '')
 	{
-		$qry = "Select games_id as game_id, type, side, filename, resolution, userid FROM banners WHERE 1 ";
+		$qry = "Select games_id as game_id, type, side, filename, resolution, CASE WHEN userid >= 999999 THEN 1 ELSE 0 END AS base_url FROM banners WHERE 1 ";
 		$is_filter = false;
 		if(is_array($filters))
 		{

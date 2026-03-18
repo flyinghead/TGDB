@@ -320,17 +320,6 @@ $app->group('/v1', function()
 					}
 					$JSON_Response['include']['boxart']['base_url'] = CommonUtils::getImagesBaseURL();
 					$JSON_Response['include']['boxart']['data'] = $API->GetGameBoxartByID($IDs, 0, 999, 'boxart');
-					// FIXME infamous hack
-					$list = $JSON_Response['include']['boxart']['data'];
-					foreach($list as &$game)
-					{
-						foreach($game as &$image)
-						{
-							if ($image->userid >= 999999)
-								$image->filename = "https://tgdb.flyca.st/cdn/images/thumb/" . $image->filename;
-							unset($image->userid);
-						}
-					}
 				}
 				if(isset($options['platform']) && $options['platform'])
 				{
@@ -512,7 +501,7 @@ $app->group('/v1', function()
 				{
 					$PlatformIDs[] = $platform->id;
 				}
-				$JSON_Response['include']['images']['base_url'] = CommonUtils::getImagesBaseURL();
+				$JSON_Response['include']['images']['base_url'] = CommonUtils::getImagesBaseURL()[0];
 				$JSON_Response['include']['images']['data'] = $API->GetPlatformBoxartByID($PlatformIDs, 0, 99999, ['boxart']);
 			}
 			return $response->withJson($JSON_Response);
@@ -544,7 +533,7 @@ $app->group('/v1', function()
 				{
 					$PlatformIDs[] = $platform->id;
 				}
-				$JSON_Response['include']['images']['base_url'] = CommonUtils::getImagesBaseURL();
+				$JSON_Response['include']['images']['base_url'] = CommonUtils::getImagesBaseURL()[0];
 				$JSON_Response['include']['images']['data'] = $API->GetPlatformBoxartByID($PlatformIDs, 0, 99999, ['boxart']);
 			}
 			return $response->withJson($JSON_Response);
@@ -583,7 +572,7 @@ $app->group('/v1', function()
 				{
 					$PlatformIDs[] = $platform->id;
 				}
-				$JSON_Response['include']['images']['base_url'] = CommonUtils::getImagesBaseURL();
+				$JSON_Response['include']['images']['base_url'] = CommonUtils::getImagesBaseURL()[0];
 				$JSON_Response['include']['images']['data'] = $API->GetPlatformBoxartByID($PlatformIDs, 0, 99999, ['boxart']);
 			}
 			return $response->withJson($JSON_Response);
@@ -616,7 +605,7 @@ $app->group('/v1', function()
 			$has_next_page = $count > $limit;
 
 			$JSON_Response = Utils::getStatus(200);
-			$JSON_Response['data'] = array("count" => count($list), 'base_url' => CommonUtils::getImagesBaseURL(), "images" => $list);
+			$JSON_Response['data'] = array("count" => count($list), 'base_url' => CommonUtils::getImagesBaseURL()[0], "images" => $list);
 			$JSON_Response['pages'] = Utils::getJsonPageUrl($page, $has_next_page);
 
 			return $response->withJson($JSON_Response);

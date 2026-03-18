@@ -211,7 +211,7 @@ if (get_request_method() == "POST")
 						{
 							$image_path = $_REQUEST['type'] . "/" . $_REQUEST['subtype'] . "/" . $image_name;
 							$res = $API->DeleteAndInsertGameImages($tgdb_user->GetUserID(), $cover->id, $_REQUEST['game_id'], $_REQUEST['type'], $image_path, $_REQUEST['subtype']);
-							DiscordUtils::PostImageUpdate($tgdb_user, $_REQUEST['game_id'], CommonUtils::getImagesBaseURL()['thumb'] . $image_path, $_REQUEST['type'], $_REQUEST['subtype'], 1);
+							DiscordUtils::PostImageUpdate($tgdb_user, $_REQUEST['game_id'], CommonUtils::getImagesBaseURL()[0]'thumb'] . $image_path, $_REQUEST['type'], $_REQUEST['subtype'], 1);
 								echo json_encode($result); return;
 						}
 					}
@@ -234,7 +234,7 @@ if (get_request_method() == "POST")
 				$sub_type = "";
 				if(!empty($_REQUEST['subtype']))
 					$sub_type = $_REQUEST['subtype'];
-				DiscordUtils::PostImageUpdate($tgdb_user, $_REQUEST['game_id'], CommonUtils::getImagesBaseURL()['thumb'] . $image_path, $_REQUEST['type'], $sub_type, 0);
+				DiscordUtils::PostImageUpdate($tgdb_user, $_REQUEST['game_id'], CommonUtils::getImagesBaseURL()[0]'thumb'] . $image_path, $_REQUEST['type'], $sub_type, 0);
 
 			}
 		}

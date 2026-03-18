@@ -564,7 +564,9 @@ definitions:
                   - data
                 properties:
                   base_url:
-                    $ref: '#/definitions/ImageBaseUrlMeta'
+                    type: array
+                    items:
+                      $ref: '#/definitions/ImageBaseUrlMeta'
                   data:
                     type: object
                     additionalProperties:
@@ -614,7 +616,9 @@ definitions:
                   - data
                 properties:
                   base_url:
-                    $ref: '#/definitions/ImageBaseUrlMeta'
+                    type: array
+                    items:
+                      $ref: '#/definitions/ImageBaseUrlMeta'
                   data:
                     type: object
                     additionalProperties:
@@ -643,7 +647,9 @@ definitions:
                 type: integer
                 minimum: 0
               base_url:
-                $ref: '#/definitions/ImageBaseUrlMeta'
+                type: array
+                items:
+                  $ref: '#/definitions/ImageBaseUrlMeta'
               images:
                 type: object
                 additionalProperties:
@@ -968,6 +974,7 @@ definitions:
       - small
       - thumb
       - cropped_center_thumb
+      - cropped_center_thumb_square
       - medium
       - large
     properties:
@@ -979,6 +986,8 @@ definitions:
         type: string
       cropped_center_thumb:
         type: string
+      cropped_center_thumb_square:
+        type: string
       medium:
         type: string
       large:
@@ -988,6 +997,7 @@ definitions:
       small: 'https://cdn.thegamsdb.net/images/small/'
       thumb: 'https://cdn.thegamsdb.net/images/thumb/'
       cropped_center_thumb: 'https://cdn.thegamsdb.net/images/cropped_center_thumb/'
+      cropped_center_thumb_square: 'https://cdn.thegamsdb.net/images/cropped_center_thumb_square/'
       medium: 'https://cdn.thegamsdb.net/images/medium/'
       large: 'https://cdn.thegamsdb.net/images/large/'
   PlatformImage:
@@ -1018,12 +1028,16 @@ definitions:
         type: string
       resolution:
         type: string
+      base_url:
+        type: integer
+        minimum: 0
     example:
       id: 23413
       type: 'boxart'
       side: 'front'
       filename: 'boxart/front/1-1.jpg'
       resolution: '1529x2156'
+      base_url: 0
   UpdateModel:
     type: object
     properties:
