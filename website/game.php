@@ -21,7 +21,7 @@ if(isset($_REQUEST['id']) && !empty($_REQUEST['id']) && is_numeric($_REQUEST['id
 {
 	$options = array("overview" => true, "players" => true, "rating" => true, "ESRB" => true, "boxart" => true, "coop" => true,
 		"genres" => true, "publishers" => true, "platform" => true, "youtube" => true, "alternates" => true, "uids" => true,
-		"region_id" => true, "country_id" => true, "hashes" => true);
+		"region_id" => true, "country_id" => true, "hashes" => true, "uid_conflict" => true);
 	$list = $API->GetGameByID($_REQUEST['id'], 0, 1, $options);
 	if(empty($list))
 	{
@@ -336,6 +336,9 @@ $Header->appendRawHeader(function() { global $Game, $box_cover, $tgdb_user;
 								?>
 								<p>Genre(s): <?= implode(" | ", $genres) ?></p>
 								<?php endif; if (!empty($Game->uids)) : ?>
+								<?php if ($Game->uid_conflict != 0) : ?>
+									<p>⚠️ UID Conflict</p>
+								<?php endif; ?>
 								<?php
 								$uids = [];
 									foreach($Game->uids as $item)

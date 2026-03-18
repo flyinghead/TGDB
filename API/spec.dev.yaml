@@ -974,7 +974,6 @@ definitions:
       - small
       - thumb
       - cropped_center_thumb
-      - cropped_center_thumb_square
       - medium
       - large
     properties:
@@ -986,8 +985,6 @@ definitions:
         type: string
       cropped_center_thumb:
         type: string
-      cropped_center_thumb_square:
-        type: string
       medium:
         type: string
       large:
@@ -997,7 +994,6 @@ definitions:
       small: 'https://cdn.thegamsdb.net/images/small/'
       thumb: 'https://cdn.thegamsdb.net/images/thumb/'
       cropped_center_thumb: 'https://cdn.thegamsdb.net/images/cropped_center_thumb/'
-      cropped_center_thumb_square: 'https://cdn.thegamsdb.net/images/cropped_center_thumb_square/'
       medium: 'https://cdn.thegamsdb.net/images/medium/'
       large: 'https://cdn.thegamsdb.net/images/large/'
   PlatformImage:

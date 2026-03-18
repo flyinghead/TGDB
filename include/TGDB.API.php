@@ -2932,7 +2932,8 @@ class TGDB
 		return true;
 	}
 
-	function UpdateGame($user_id, $game_id, $game_title, $overview, $youtube, $release_date, $players, $coop, $new_developers, $new_publishers, $new_genres, $ratings, $alternate_names, $uids, $platform, $region_id, $country_id, $hashes)
+	function UpdateGame($user_id, $game_id, $game_title, $overview, $youtube, $release_date, $players, $coop, $new_developers, $new_publishers, $new_genres,
+			$ratings, $alternate_names, $uids, $platform, $region_id, $country_id, $hashes, $uid_conflict)
 	{
 		$dbh = $this->database->dbh;
 		{
@@ -3002,7 +3003,7 @@ class TGDB
 			$dbh->beginTransaction();
 
 			$sth = $dbh->prepare("UPDATE games SET game_title=:game_title, overview=:overview, release_date=:release_date, players=:players,
-			coop=:coop, youtube=:YouTube, rating=:rating, platform=:platform, region_id=:region_id, country_id=:country_id WHERE id=:game_id");
+			coop=:coop, youtube=:YouTube, rating=:rating, platform=:platform, region_id=:region_id, country_id=:country_id, uid_conflict=:uid_conflict WHERE id=:game_id");
 			$sth->bindValue(':game_id', $game_id, PDO::PARAM_INT);
 			$sth->bindValue(':game_title', htmlspecialchars($game_title), PDO::PARAM_STR);
 			$sth->bindValue(':overview', htmlspecialchars($overview), PDO::PARAM_STR);
@@ -3015,6 +3016,7 @@ class TGDB
 
 			$sth->bindValue(':region_id', $region_id, PDO::PARAM_INT);
 			$sth->bindValue(':country_id', $country_id, PDO::PARAM_INT);
+			$sth->bindValue(':uid_conflict', $uid_conflict, PDO::PARAM_INT);
 
 			$sth->execute();
 			{
@@ -3137,7 +3139,8 @@ class TGDB
 		return $dbh->commit();
 	}
 
-	function InsertGame($user_id, $game_title, $overview, $youtube, $release_date, $players, $coop, $new_developers, $new_publishers, $platform, $new_genres, $ratings, $alternate_names, $uids, $region_id, $country_id, $hashes)
+	function InsertGame($user_id, $game_title, $overview, $youtube, $release_date, $players, $coop, $new_developers, $new_publishers, $platform, $new_genres,
+			$ratings, $alternate_names, $uids, $region_id, $country_id, $hashes, $uid_conflict)
 	{
 		$game_id = 0;
 		$dbh = $this->database->dbh;
@@ -3175,8 +3178,8 @@ class TGDB
 					$valid_pubs_id[] = $pubs_list[$pub_id]->name;
 				}
 			}
-			$sth = $dbh->prepare("INSERT INTO games(game_title, overview, release_date, players, coop, youtube, platform, rating, region_id, country_id)
-			values (:game_title, :overview, :release_date, :players, :coop, :youtube, :platform, :rating, :region_id, :country_id)");
+			$sth = $dbh->prepare("INSERT INTO games(game_title, overview, release_date, players, coop, youtube, platform, rating, region_id, country_id, uid_conflict)
+			values (:game_title, :overview, :release_date, :players, :coop, :youtube, :platform, :rating, :region_id, :country_id, :uid_conflict)");
 			$sth->bindValue(':game_title', htmlspecialchars($game_title), PDO::PARAM_STR);
 			$sth->bindValue(':overview', htmlspecialchars($overview), PDO::PARAM_STR);
 			$sth->bindValue(':release_date', $release_date, PDO::PARAM_STR);
@@ -3188,6 +3191,7 @@ class TGDB
 
 			$sth->bindValue(':region_id', $region_id, PDO::PARAM_INT);
 			$sth->bindValue(':country_id', $country_id, PDO::PARAM_INT);
+			$sth->bindValue(':uid_conflict', $uid_conflict, PDO::PARAM_INT);
 
 			if($sth->execute())
 			{

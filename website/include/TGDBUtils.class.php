@@ -29,7 +29,17 @@ class TGDBUtils
 			}
 			if(isset($ret))
 			{
-				return CommonUtils::getImagesBaseUrl()[$ret->base_url][$return_size] . $ret->filename . '#' . $ret->base_url;
+				if (isset($ret->base_url))
+					$prefix = CommonUtils::getImagesBaseUrl()[$ret->base_url][$return_size];
+				if (!isset($prefix))
+				{
+					if (!isset($ret->base_url) || $ret->base_url == 0)
+						$prefix = CommonUtils::$BOXART_BASE_URL;
+					else
+						$prefix = CommonUtils::$LOCAL_BOXART_BASE_URL;
+					$prefix = $prefix . $return_size . "/";
+				}
+				return $prefix . $ret->filename;
 			}
 		}
 		if($return_placeholder)

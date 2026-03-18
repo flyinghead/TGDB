@@ -37,7 +37,8 @@ require_once __DIR__ . "/include/WebUtils.class.php";
 if(isset($_REQUEST['id']) && !empty($_REQUEST['id']) && is_numeric($_REQUEST['id']))
 {
 	$options = array("release_date" => true, "overview" => true, "players" => true, "rating" => true, "ESRB" => true, "boxart" => true, "coop" => true,
-		"genres" => true, "publishers" => true, "platform" => true, "youtube" => true, "alternates" => true, "uids" => true, "region_id" => true, "country_id" => true, "hashes" => true);
+		"genres" => true, "publishers" => true, "platform" => true, "youtube" => true, "alternates" => true, "uids" => true, "region_id" => true, "country_id" => true,
+		"hashes" => true, "uid_conflict" => true);
 	$API = TGDB::getInstance();
 	$GenreList = $API->GetGenres();
 	$ESRBRating = $API->GetESRBRating();
@@ -804,6 +805,10 @@ $Header->appendRawHeader(function() { global $Game, $tgdb_user, $game_devs, $dev
 								</div>
 							</div>
 							<div class="card-footer">
+								<p>
+									<label for="uid_conflict">UID Conflict:&nbsp;</label>
+									<input id="uid_conflict" name="uid_conflict" type="checkbox" <?= $Game->uid_conflict ? 'checked' : '' ?> />
+								</p>
 								<div id="uids_fields">
 									<?php while(!empty($Game->uids) && !empty($uid = array_shift($Game->uids))) : ?>
 									<div class="input-group mb-3">

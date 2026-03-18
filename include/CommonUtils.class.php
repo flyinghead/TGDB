@@ -5,7 +5,7 @@ class CommonUtils
 	static public $WEBSITE_BASE_URL = "https://tgdb.flyca.st/";
 	static public $API_BASE_URL = "https://tgdb.flyca.st/api";
 	static public $BOXART_BASE_URL = "https://cdn.thegamesdb.net/images/";
-	static private $LOCAL_BOXART_BASE_URL = "https://tgdb.flyca.st/cdn/images/";
+	static public $LOCAL_BOXART_BASE_URL = "https://tgdb.flyca.st/cdn/images/";
 
 	static function getImagesBaseURL()
 	{
@@ -16,7 +16,6 @@ class CommonUtils
 				"small" => CommonUtils::$BOXART_BASE_URL . "small/",
 				"thumb" => CommonUtils::$BOXART_BASE_URL . "thumb/",
 				"cropped_center_thumb" => CommonUtils::$BOXART_BASE_URL . "cropped_center_thumb/",
-				"cropped_center_thumb_square" => CommonUtils::$BOXART_BASE_URL . "cropped_center_thumb_square/",
 				"medium" => CommonUtils::$BOXART_BASE_URL . "medium/",
 				"large" => CommonUtils::$BOXART_BASE_URL . "large/",
 			],
@@ -25,7 +24,6 @@ class CommonUtils
 				"small" => CommonUtils::$LOCAL_BOXART_BASE_URL . "small/",
 				"thumb" => CommonUtils::$LOCAL_BOXART_BASE_URL . "thumb/",
 				"cropped_center_thumb" => CommonUtils::$LOCAL_BOXART_BASE_URL . "cropped_center_thumb/",
-				"cropped_center_thumb_square" => CommonUtils::$LOCAL_BOXART_BASE_URL . "cropped_center_thumb_square/",
 				"medium" => CommonUtils::$LOCAL_BOXART_BASE_URL . "medium/",
 				"large" => CommonUtils::$LOCAL_BOXART_BASE_URL . "large/",
 			]

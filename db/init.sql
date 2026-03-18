@@ -279,6 +279,7 @@ CREATE TABLE `games` (
                          `alternates_to_be_removed` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                          `region_id` int(11) NOT NULL,
                          `country_id` int(11) NOT NULL,
+                         `uid_conflict` tinyint(1) NOT NULL DEFAULT 0,
                          PRIMARY KEY (`id`),
                          KEY `Platform` (`platform`),
                          KEY `ReleaseDateRevised` (`release_date`),

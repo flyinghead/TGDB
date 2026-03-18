@@ -245,12 +245,12 @@ $Header->appendRawHeader(function() { global $devs_list, $pubs_list; ?>
 					input_field = ele.find("#field");
 					if(type == "uids")
 					{
-						input_field.attr('name', "uids");
+						input_field.attr('name', "uids[]");
 						input_field.attr('placeholder', 'UID(s)');
 					}
 					else if(type == "hashes")
 					{
-						input_field.attr('name', "hashes");
+						input_field.attr('name', "hashes[]");
 						input_field.attr('placeholder', 'Hash(es)');
 					}
 					else
@@ -384,6 +384,10 @@ $Header->appendRawHeader(function() { global $devs_list, $pubs_list; ?>
 								</div>
 							</div>
 							<div class="card-footer">
+								<p>
+									<label for="uid_conflict">UID Conflict:&nbsp;</label>
+									<input id="uid_conflict" name="uid_conflict" type="checkbox" <?= $Game->uid_conflict ? 'checked' : '' ?> />
+								</p>
 								<div id="uids_fields">
 									<div class="input-group mb-3">
 										<input name="uids[]" type="text" class="form-control" placeholder="UID(s)"/>
