@@ -82,6 +82,8 @@ class HEADER
 	<!-- script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5337615406686584"
      crossorigin="anonymous"></script -->
 	 <?php endif; ?>
+	 <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32"/>
+	 <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16"/>
 </head>
 <body>
 	<?php 

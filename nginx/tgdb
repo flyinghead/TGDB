@@ -1,0 +1,62 @@
+server {
+	server_name tgdb.flyca.st;
+
+	root /path/to/TGDB;
+
+	index index.html index.htm index.php;
+
+	# Web site
+	location / {
+		root /path/to/TGDB/website;
+		try_files $uri $uri/ /index.php?$args =404;
+		# PHP files in /website/include aren't executable
+		location ~ /include/.*\.php$ {
+			return 404;
+		}
+		# Other PHP files are
+		location ~ \.php$ {
+			include snippets/fastcgi-php.conf;
+			fastcgi_pass unix:/run/php/php8.4-fpm.sock;
+			fastcgi_param SCRIPT_FILENAME /path/to/TGDB/website$fastcgi_script_name;
+			include fastcgi_params;
+		}
+	}
+	# API
+	location /api {
+		try_files $uri $uri/ /api/index.php?$args;
+		# the exact match below has precedence so this doesn't include /api/index.php
+		location ~ /api/.*\.php$ {
+			return 404;
+		}
+	}
+	location = /api/index.php {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/run/php/php8.4-fpm.sock;
+		fastcgi_param SCRIPT_FILENAME /path/to/TGDB/API/index.php;
+		include fastcgi_params;
+	}
+	# CDN
+	location ~ ^/cdn(/.+\.jpg)$ {
+		# Save the original uri path
+		set $redirect_url $1;
+		if (!-f $request_filename) {
+			# Requested image doesn't exist so try to create it
+			# can't use try_files since it won't redirect to the target location
+		        rewrite .* /cdn/createimage.php last;
+		}
+		try_files $uri $uri/ =404;
+	}
+	location /cdn/ {
+		# Other image types (png, bmp, gif) are originals
+		try_files $uri $uri/ =404;
+	}
+	location = /cdn/createimage.php {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/run/php/php8.4-fpm.sock;
+		fastcgi_param SCRIPT_FILENAME /path/to/TGDB/cdn/createimage.php;
+		# Pass original uri path in REDIRECT_URL
+		fastcgi_param REDIRECT_URL $redirect_url;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_NAME /cdn/createimage.php;
+	}
+}
